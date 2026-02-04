@@ -1,0 +1,14 @@
+/home/kasper/Documents/DotNetProjects/gameoflife/bin/Debug/net10.0/gameoflife
+/home/kasper/Documents/DotNetProjects/gameoflife/bin/Debug/net10.0/gameoflife.deps.json
+/home/kasper/Documents/DotNetProjects/gameoflife/bin/Debug/net10.0/gameoflife.runtimeconfig.json
+/home/kasper/Documents/DotNetProjects/gameoflife/bin/Debug/net10.0/gameoflife.dll
+/home/kasper/Documents/DotNetProjects/gameoflife/bin/Debug/net10.0/gameoflife.pdb
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.GeneratedMSBuildEditorConfig.editorconfig
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.AssemblyInfoInputs.cache
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.AssemblyInfo.cs
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.csproj.CoreCompileInputs.cache
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.dll
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/refint/gameoflife.dll
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.pdb
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.genruntimeconfig.cache
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/ref/gameoflife.dll
