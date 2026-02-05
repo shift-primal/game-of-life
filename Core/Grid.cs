@@ -1,7 +1,7 @@
 public class Grid
 {
     private readonly Random _r = new();
-    public Cell[,] cells;
+    private readonly Cell[,] _cells;
 
     private readonly int _width;
     private readonly int _height;
@@ -11,14 +11,19 @@ public class Grid
         _width = w;
         _height = h;
 
-        cells = new Cell[_width, _height];
+        _cells = new Cell[_width, _height];
 
         for (int x = 0; x < w; x++)
         for (int y = 0; y < h; y++)
         {
             bool shouldBeAlive = _r.Next(5) == 0;
-            cells[x, y] = new Cell(x, y, shouldBeAlive);
+            _cells[x, y] = new Cell(x, y, shouldBeAlive);
         }
+    }
+
+    public Cell[,] GetCells()
+    {
+        return _cells;
     }
 
     private List<Cell> GetNeighbours(int x, int y)
@@ -32,7 +37,7 @@ public class Grid
                 if (r < 0 || r >= _width || c < 0 || c >= _height || (r == x && c == y))
                     continue;
 
-                neighbours.Add(cells[r, c]);
+                neighbours.Add(_cells[r, c]);
             }
         }
 
@@ -43,7 +48,7 @@ public class Grid
     {
         var neighbours = GetNeighbours(x, y);
 
-        return neighbours.Cast<Cell>().Count(c => c.IsAlive);
+        return neighbours.Count(c => c.IsAlive);
     }
 
     public void Tick()
@@ -51,7 +56,7 @@ public class Grid
         List<Cell> toKill = [];
         List<Cell> toRevive = [];
 
-        foreach (var c in cells)
+        foreach (var c in _cells)
         {
             int nc = GetAliveNeighboursCount(c.Position.X, c.Position.Y);
 

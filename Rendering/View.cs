@@ -15,7 +15,9 @@ public class View
 
     public void Render(Grid grid)
     {
-        foreach (var c in grid.cells)
+        var cells = grid.GetCells();
+
+        foreach (var c in cells)
         {
             if (c.IsAlive)
                 gridView.DrawPixel(c.Position.X, c.Position.Y);

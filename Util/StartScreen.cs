@@ -1,17 +1,13 @@
-public class StartScreen
+public static class StartScreen
 {
-    public bool Auto;
-    public int Speed;
-
-    public StartScreen()
+    public static Options GetOptions()
     {
-        Auto = QuestionAuto();
-
-        if (Auto)
-            Speed = QuestionSpeed();
+        bool auto = QuestionAuto();
+        int speed = auto ? QuestionSpeed() : 0;
+        return new Options(auto, speed);
     }
 
-    private bool QuestionAuto()
+    private static bool QuestionAuto()
     {
         Console.WriteLine("Do you want the game to run auto, or do you want to cycle manually?");
         Console.WriteLine("1: Auto");
@@ -27,7 +23,7 @@ public class StartScreen
         return result;
     }
 
-    private int QuestionSpeed()
+    private static int QuestionSpeed()
     {
         Console.WriteLine("What speed would you like the game to run at?");
         Console.WriteLine("1: Slow (1000ms)");

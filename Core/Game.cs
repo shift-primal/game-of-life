@@ -3,36 +3,40 @@ public class Game
     private readonly int _width;
     private readonly int _height;
 
-    private readonly StartScreen _startScreen;
+    private readonly Options _opts;
 
     private readonly View _view;
     private readonly Grid _grid;
 
-    private readonly bool _auto;
-    private readonly int _speed;
+    private bool _running = true;
+    private bool _paused = false;
 
     public Game()
     {
         _width = Console.WindowWidth;
         _height = Console.WindowHeight;
 
-        _startScreen = new();
-
-        _auto = _startScreen.Auto;
-        _speed = _startScreen.Speed;
+        _opts = StartScreen.GetOptions();
 
         _view = new(_width, _height);
         _grid = new(_width, _height);
     }
 
+    private void QuitGame()
+    {
+        _running = false;
+    }
+
+    private void TogglePausedGame()
+    {
+        _paused = !_paused;
+    }
+
     public void MainLoopManual()
     {
-        bool running = true;
-        _view.Render(_grid);
-
-        while (running)
+        while (_running)
         {
-            ConsoleKeyInfo key = Console.ReadKey(true);
+            var key = Console.ReadKey(true);
 
             if (key.Key == ConsoleKey.Spacebar || key.Key == ConsoleKey.RightArrow)
             {
@@ -44,20 +48,36 @@ public class Game
 
     public void MainLoopAuto()
     {
-        bool running = true;
-        _view.Render(_grid);
-
-        while (running)
+        while (_running)
         {
-            _grid.Tick();
-            _view.Render(_grid);
-            Thread.Sleep(_speed);
+            if (Console.KeyAvailable)
+            {
+                var key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.Escape or ConsoleKey.Q:
+                        QuitGame();
+                        break;
+                    case ConsoleKey.Spacebar or ConsoleKey.P:
+                        TogglePausedGame();
+                        break;
+                }
+
+                if (!_paused)
+                {
+                    _grid.Tick();
+                    _view.Render(_grid);
+                }
+
+                Thread.Sleep(_opts.Speed);
+            }
         }
     }
 
     public void Run()
     {
-        if (_auto)
+        if (_opts.Auto)
             MainLoopAuto();
         else
             MainLoopManual();
