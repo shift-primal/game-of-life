@@ -34,13 +34,15 @@ public class Game
         _paused = !_paused;
     }
 
-    public void Tick()
+    private void Tick()
     {
         _view.Render(_grid);
         _grid.Tick();
     }
 
-    public void MainLoop()
+    private void AdjustSpeed(Speed newSpeed) { }
+
+    private void MainLoop()
     {
         if (Console.KeyAvailable)
         {
@@ -63,7 +65,7 @@ public class Game
         if (!_paused)
         {
             Tick();
-            Thread.Sleep(_opts.Speed);
+            Thread.Sleep((int)_opts.Speed);
         }
     }
 
