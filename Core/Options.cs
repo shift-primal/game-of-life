@@ -1,1 +1,1 @@
-public record Options(bool Auto, int Speed);
+public record Options(int Speed);

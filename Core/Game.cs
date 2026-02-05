@@ -24,6 +24,8 @@ public class Game
 
     private void QuitGame()
     {
+        Console.CursorVisible = true;
+        Console.ResetColor();
         _running = false;
     }
 
@@ -32,54 +34,45 @@ public class Game
         _paused = !_paused;
     }
 
-    public void MainLoopManual()
+    public void Tick()
     {
-        while (_running)
+        _view.Render(_grid);
+        _grid.Tick();
+    }
+
+    public void MainLoop()
+    {
+        if (Console.KeyAvailable)
         {
             var key = Console.ReadKey(true);
 
-            if (key.Key == ConsoleKey.Spacebar || key.Key == ConsoleKey.RightArrow)
+            switch (key.Key)
             {
-                _grid.Tick();
-                _view.Render(_grid);
+                case ConsoleKey.Escape or ConsoleKey.Q:
+                    QuitGame();
+                    break;
+                case ConsoleKey.Spacebar or ConsoleKey.P:
+                    TogglePausedGame();
+                    break;
+                case ConsoleKey.RightArrow when _paused:
+                    Tick();
+                    break;
             }
         }
-    }
 
-    public void MainLoopAuto()
-    {
-        while (_running)
+        if (!_paused)
         {
-            if (Console.KeyAvailable)
-            {
-                var key = Console.ReadKey(true);
-
-                switch (key.Key)
-                {
-                    case ConsoleKey.Escape or ConsoleKey.Q:
-                        QuitGame();
-                        break;
-                    case ConsoleKey.Spacebar or ConsoleKey.P:
-                        TogglePausedGame();
-                        break;
-                }
-
-                if (!_paused)
-                {
-                    _grid.Tick();
-                    _view.Render(_grid);
-                }
-
-                Thread.Sleep(_opts.Speed);
-            }
+            Tick();
+            Thread.Sleep(_opts.Speed);
         }
     }
 
     public void Run()
     {
-        if (_opts.Auto)
-            MainLoopAuto();
-        else
-            MainLoopManual();
+        _view.Render(_grid);
+        while (_running)
+        {
+            MainLoop();
+        }
     }
 }
