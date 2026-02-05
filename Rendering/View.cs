@@ -1,20 +1,19 @@
 public class View
 {
-    private readonly int viewWidth;
-    private readonly int viewHeight;
-    private readonly Grid grid;
+    public readonly int viewWidth;
+    public readonly int viewHeight;
+
     private readonly GridView gridView;
 
-    public View()
+    public View(int width, int height)
     {
-        viewWidth = Console.WindowWidth;
-        viewHeight = Console.WindowHeight;
+        viewWidth = width;
+        viewHeight = height;
 
-        grid = new(viewWidth, viewHeight);
         gridView = new(viewWidth, viewHeight, ConsoleColor.Black, ConsoleColor.White);
     }
 
-    public void Render()
+    public void Render(Grid grid)
     {
         foreach (var c in grid.cells)
         {

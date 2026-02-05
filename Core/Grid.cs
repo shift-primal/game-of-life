@@ -16,17 +16,12 @@ public class Grid
         for (int x = 0; x < w; x++)
         for (int y = 0; y < h; y++)
         {
-            bool shouldBeAlive = _r.Next(2) == 0;
+            bool shouldBeAlive = _r.Next(5) == 0;
             cells[x, y] = new Cell(x, y, shouldBeAlive);
         }
     }
 
-    public Cell GetCell(int x, int y)
-    {
-        return cells[x, y];
-    }
-
-    public List<Cell> GetNeighbours(int x, int y)
+    private List<Cell> GetNeighbours(int x, int y)
     {
         List<Cell> neighbours = [];
 
@@ -44,16 +39,32 @@ public class Grid
         return neighbours;
     }
 
-    public List<Cell> GetAliveNeighbours(int x, int y)
+    private int GetAliveNeighboursCount(int x, int y)
     {
-        List<Cell> aliveCells = [];
-
         var neighbours = GetNeighbours(x, y);
 
-        foreach (var c in neighbours)
-            if (c.IsAlive)
-                aliveCells.Add(c);
+        return neighbours.Cast<Cell>().Count(c => c.IsAlive);
+    }
 
-        return aliveCells;
+    public void Tick()
+    {
+        List<Cell> toKill = [];
+        List<Cell> toRevive = [];
+
+        foreach (var c in cells)
+        {
+            int nc = GetAliveNeighboursCount(c.Position.X, c.Position.Y);
+
+            if (c.IsAlive && (nc < 2 || nc > 3))
+                toKill.Add(c);
+            else if (!c.IsAlive && nc == 3)
+                toRevive.Add(c);
+        }
+
+        foreach (var c in toKill)
+            c.Kill();
+
+        foreach (var c in toRevive)
+            c.Revive();
     }
 }

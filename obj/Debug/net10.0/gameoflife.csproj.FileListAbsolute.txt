@@ -12,3 +12,4 @@
 /home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.pdb
 /home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.genruntimeconfig.cache
 /home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/ref/gameoflife.dll
+/home/kasper/Documents/DotNetProjects/gameoflife/obj/Debug/net10.0/gameoflife.sourcelink.json
