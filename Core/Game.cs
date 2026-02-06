@@ -5,11 +5,16 @@ public class Game
 
     private readonly Options _opts;
 
-    private readonly View _view;
+    private int _tickTimer = 0;
+    private int _generationCount = 0;
+
+    private readonly Screen _screen;
     private readonly Grid _grid;
 
     private bool _running = true;
     private bool _paused = false;
+
+    private readonly Dictionary<ConsoleKey, Action> _keyActions;
 
     public Game()
     {
@@ -18,8 +23,21 @@ public class Game
 
         _opts = StartScreen.GetOptions();
 
-        _view = new(_width, _height);
-        _grid = new(_width, _height);
+        _screen = new(_width, _height);
+        _grid = new(_screen.GridWidth, _screen.GridHeight);
+
+        _keyActions = new()
+        {
+            { ConsoleKey.Escape, QuitGame },
+            { ConsoleKey.Q, QuitGame },
+            { ConsoleKey.Spacebar, TogglePausedGame },
+            { ConsoleKey.P, TogglePausedGame },
+            { ConsoleKey.Add, IncreaseSpeed },
+            { ConsoleKey.UpArrow, IncreaseSpeed },
+            { ConsoleKey.Subtract, DecreaseSpeed },
+            { ConsoleKey.DownArrow, DecreaseSpeed },
+            { ConsoleKey.RightArrow, TickIfPaused },
+        };
     }
 
     private void QuitGame()
@@ -36,42 +54,51 @@ public class Game
 
     private void Tick()
     {
-        _view.Render(_grid);
+        _screen.Render(_grid);
         _grid.Tick();
+        _generationCount++;
     }
 
-    private void AdjustSpeed(Speed newSpeed) { }
+    private void TickIfPaused()
+    {
+        if (_paused)
+            Tick();
+    }
+
+    private void IncreaseSpeed()
+    {
+        var currSpeed = _opts.Speed;
+        _opts.Speed = currSpeed.Next();
+    }
+
+    private void DecreaseSpeed()
+    {
+        var currSpeed = _opts.Speed;
+        _opts.Speed = currSpeed.Prev();
+    }
 
     private void MainLoop()
     {
         if (Console.KeyAvailable)
         {
             var key = Console.ReadKey(true);
-
-            switch (key.Key)
-            {
-                case ConsoleKey.Escape or ConsoleKey.Q:
-                    QuitGame();
-                    break;
-                case ConsoleKey.Spacebar or ConsoleKey.P:
-                    TogglePausedGame();
-                    break;
-                case ConsoleKey.RightArrow when _paused:
-                    Tick();
-                    break;
-            }
+            if (_keyActions.TryGetValue(key.Key, out var action))
+                action();
         }
 
-        if (!_paused)
+        if (!_paused && _tickTimer >= (int)_opts.Speed)
         {
             Tick();
-            Thread.Sleep((int)_opts.Speed);
+            _tickTimer = 0;
         }
+
+        Thread.Sleep(10);
+        _tickTimer += 10;
     }
 
     public void Run()
     {
-        _view.Render(_grid);
+        _screen.Render(_grid);
         while (_running)
         {
             MainLoop();
