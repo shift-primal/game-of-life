@@ -1,6 +1,5 @@
 public class GridView(
-    int gridWidth,
-    int gridHeight,
+    Dimensions dimensions,
     int offsetX,
     int offsetY,
     ConsoleColor pixelColor,
@@ -15,9 +14,9 @@ public class GridView(
         Console.BackgroundColor = bgColor;
 
         char symbol = empty ? ' ' : pixel;
-        string row = new(symbol, gridWidth);
+        string row = new(symbol, dimensions.Width);
 
-        for (int y = offsetY; y < offsetY + gridHeight; y++)
+        for (int y = offsetY; y < offsetY + dimensions.Height; y++)
         {
             Console.SetCursorPosition(offsetX, y);
             Console.Write(row);

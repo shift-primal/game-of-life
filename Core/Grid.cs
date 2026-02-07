@@ -3,18 +3,16 @@ public class Grid
     private readonly Random _r = new();
     private readonly Cell[,] _cells;
 
-    private readonly int _width;
-    private readonly int _height;
+    private readonly Dimensions _dimensions;
 
-    public Grid(int w, int h)
+    public Grid(Dimensions dimensions)
     {
-        _width = w;
-        _height = h;
+        _dimensions = dimensions;
 
-        _cells = new Cell[_width, _height];
+        _cells = new Cell[_dimensions.Width, _dimensions.Height];
 
-        for (int x = 0; x < w; x++)
-        for (int y = 0; y < h; y++)
+        for (int x = 0; x < _dimensions.Width; x++)
+        for (int y = 0; y < _dimensions.Height; y++)
         {
             bool shouldBeAlive = _r.Next(5) == 0;
             _cells[x, y] = new Cell(x, y, shouldBeAlive);
@@ -34,7 +32,13 @@ public class Grid
         {
             for (int c = y - 1; c < y + 2; c++)
             {
-                if (r < 0 || r >= _width || c < 0 || c >= _height || (r == x && c == y))
+                if (
+                    r < 0
+                    || r >= _dimensions.Width
+                    || c < 0
+                    || c >= _dimensions.Height
+                    || (r == x && c == y)
+                )
                     continue;
 
                 neighbours.Add(_cells[r, c]);

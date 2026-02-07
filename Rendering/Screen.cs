@@ -1,30 +1,32 @@
 public class Screen
 {
-    private readonly int _screenWidth;
-    private readonly int _screenHeight;
-
-    public readonly int GridWidth;
-    public readonly int GridHeight;
-
-    public readonly int UiWidth;
-    public readonly int UiHeight;
+    private readonly Dimensions _screenDimensions;
+    private readonly Dimensions _gridDimensions;
+    private readonly Dimensions _uiDimensions;
 
     private readonly UiView _uiView;
     private readonly GridView _gridView;
 
-    public Screen(int screenWidth, int screenHeight)
+    public Screen(Dimensions screenDimensions, Dimensions gridDimensions)
     {
-        _screenWidth = screenWidth;
-        _screenHeight = screenHeight;
+        _screenDimensions = screenDimensions;
 
-        GridWidth = _screenWidth;
-        GridHeight = Convert.ToInt32(_screenHeight * 0.9);
+        _gridDimensions = gridDimensions;
 
-        UiWidth = _screenWidth;
-        UiHeight = _screenHeight - GridHeight;
+        _uiDimensions = new(
+            _screenDimensions.Width,
+            _screenDimensions.Height - _gridDimensions.Height
+        );
 
-        _uiView = new(UiWidth, UiHeight, 0, GridHeight, ConsoleColor.Cyan, ConsoleColor.DarkCyan);
-        _gridView = new(GridWidth, GridHeight, 0, 0, ConsoleColor.Black, ConsoleColor.White);
+        _gridView = new(_gridDimensions, 0, 0, ConsoleColor.Black, ConsoleColor.White);
+
+        _uiView = new(
+            _uiDimensions,
+            0,
+            _gridDimensions.Height,
+            ConsoleColor.Cyan,
+            ConsoleColor.DarkCyan
+        );
 
         Init();
     }
@@ -48,5 +50,7 @@ public class Screen
             else
                 _gridView.ClearPixel(c.Position.X, c.Position.Y);
         }
+
+        _uiView.Update();
     }
 }

@@ -1,7 +1,7 @@
 public class Game
 {
-    private readonly int _width;
-    private readonly int _height;
+    private readonly Dimensions _gameDimensions;
+    private readonly Dimensions _gridDimensions;
 
     private readonly Options _opts;
 
@@ -18,13 +18,13 @@ public class Game
 
     public Game()
     {
-        _width = Console.WindowWidth;
-        _height = Console.WindowHeight;
+        _gameDimensions = new(Console.WindowWidth, Console.WindowHeight);
+        _gridDimensions = new(_gameDimensions.Width, Convert.ToInt32(_gameDimensions.Height * 0.9));
 
         _opts = StartScreen.GetOptions();
 
-        _screen = new(_width, _height);
-        _grid = new(_screen.GridWidth, _screen.GridHeight);
+        _screen = new(_gameDimensions, _gridDimensions);
+        _grid = new(_gridDimensions);
 
         _keyActions = new()
         {
