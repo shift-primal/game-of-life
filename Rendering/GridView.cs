@@ -1,46 +1,49 @@
-public class GridView(
-    Dimensions dimensions,
-    int offsetX,
-    int offsetY,
-    ConsoleColor pixelColor,
-    ConsoleColor bgColor
-)
+namespace gameoflife.Rendering
 {
-    private const char pixel = '█';
-
-    public void FillGrid(bool empty = false)
+    public class GridView(
+        Dimensions dimensions,
+        int offsetX,
+        int offsetY,
+        ConsoleColor pixelColor,
+        ConsoleColor bgColor
+    )
     {
-        Console.ForegroundColor = pixelColor;
-        Console.BackgroundColor = bgColor;
+        private const char pixel = '█';
 
-        char symbol = empty ? ' ' : pixel;
-        string row = new(symbol, dimensions.Width);
-
-        for (int y = offsetY; y < offsetY + dimensions.Height; y++)
+        public void FillGrid(bool empty = false)
         {
-            Console.SetCursorPosition(offsetX, y);
-            Console.Write(row);
+            Console.ForegroundColor = pixelColor;
+            Console.BackgroundColor = bgColor;
+
+            char symbol = empty ? ' ' : pixel;
+            string row = new(symbol, dimensions.Width);
+
+            for (int y = offsetY; y < offsetY + dimensions.Height; y++)
+            {
+                Console.SetCursorPosition(offsetX, y);
+                Console.Write(row);
+            }
         }
-    }
 
-    public void DrawPixel(int x, int y, ConsoleColor pixelColor = ConsoleColor.Black)
-    {
-        Console.ForegroundColor = pixelColor;
-        Console.BackgroundColor = bgColor;
+        public void DrawPixel(int x, int y, ConsoleColor pixelColor = ConsoleColor.Black)
+        {
+            Console.ForegroundColor = pixelColor;
+            Console.BackgroundColor = bgColor;
 
-        Console.SetCursorPosition(x, y);
-        Console.Write(pixel);
+            Console.SetCursorPosition(x, y);
+            Console.Write(pixel);
 
-        Console.ResetColor();
-    }
+            Console.ResetColor();
+        }
 
-    public void ClearPixel(int x, int y)
-    {
-        Console.BackgroundColor = bgColor;
+        public void ClearPixel(int x, int y)
+        {
+            Console.BackgroundColor = bgColor;
 
-        Console.SetCursorPosition(x, y);
-        Console.Write(" ");
+            Console.SetCursorPosition(x, y);
+            Console.Write(" ");
 
-        Console.ResetColor();
+            Console.ResetColor();
+        }
     }
 }

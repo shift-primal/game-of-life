@@ -1,8 +1,13 @@
-﻿public static class Program
+﻿using gameoflife.Core;
+
+namespace gameoflife
 {
-    public static void Main()
+    public static class Program
     {
-        Game _game = new();
-        _game.Run();
+        public static void Main()
+        {
+            Game _game = new();
+            _game.Run();
+        }
     }
 }

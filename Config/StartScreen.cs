@@ -1,44 +1,50 @@
-public static class StartScreen
+using gameoflife.Core;
+
+namespace gameoflife.Config
 {
-    public static Options GetOptions()
+    public static class StartScreen
     {
-        var speed = QuestionSpeed();
-
-        return new(speed);
-    }
-
-    private static Speed QuestionSpeed()
-    {
-        while (true)
+        public static Options GetOptions()
         {
-            Console.Clear();
-            Console.WriteLine("What speed would you like the game to run at?");
-            Console.WriteLine("1: Slow (1000ms)");
-            Console.WriteLine("2: Medium (500ms)");
-            Console.WriteLine("3: Fast (250ms)");
-            Console.WriteLine("4: Very Fast (100ms)");
-            Console.WriteLine("5: Super Fast (50ms)");
-            Console.WriteLine();
-            Console.Write("Select one: ");
+            var speed = QuestionSpeed();
+            var dimensions = new Dimensions(Console.WindowWidth, Console.WindowHeight);
 
-            switch (Console.ReadLine())
+            return new(speed, dimensions);
+        }
+
+        private static Speed QuestionSpeed()
+        {
+            while (true)
             {
-                case "1":
-                    return Speed.Slow;
-                case "2":
-                    return Speed.Medium;
-                case "3":
-                    return Speed.Fast;
-                case "4":
-                    return Speed.VeryFast;
-                case "5":
-                    return Speed.SuperFast;
-                default:
-                    Console.WriteLine(
-                        "Invalid input - Valid inputs are (1-5)\nPress any key to retry."
-                    );
-                    Console.ReadKey();
-                    break;
+                Console.Clear();
+                Console.WriteLine("What speed would you like the game to run at?");
+                Console.WriteLine("1: Slow (1000ms)");
+                Console.WriteLine("2: Medium (500ms)");
+                Console.WriteLine("3: Fast (250ms)");
+                Console.WriteLine("4: Very Fast (100ms)");
+                Console.WriteLine("5: Super Fast (50ms)");
+                Console.WriteLine();
+                Console.Write("Select one: ");
+
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        return Speed.Slow;
+                    case "2":
+                        return Speed.Medium;
+                    case "3":
+                        return Speed.Fast;
+                    case "4":
+                        return Speed.VeryFast;
+                    case "5":
+                        return Speed.SuperFast;
+                    default:
+                        Console.WriteLine(
+                            "Invalid input - Valid inputs are (1-5)\nPress any key to retry."
+                        );
+                        Console.ReadKey();
+                        break;
+                }
             }
         }
     }

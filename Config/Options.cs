@@ -1,9 +1,16 @@
-public record Options
-{
-    public Speed Speed { get; set; }
+using gameoflife.Core;
 
-    public Options(Speed speed)
+namespace gameoflife.Config
+{
+    public record Options
     {
-        Speed = speed;
+        public Speed Speed { get; set; }
+        public Dimensions Dimensions { get; set; }
+
+        public Options(Speed speed, Dimensions dimensions)
+        {
+            Dimensions = dimensions;
+            Speed = speed;
+        }
     }
 }

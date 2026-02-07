@@ -1,4 +1,7 @@
-public static class Log
+namespace gameoflife.Debug
 {
-    public static void Write(object msg) => File.AppendAllText("debug.log", $"{msg}\n");
+    public static class Log
+    {
+        public static void Write(object msg) => File.AppendAllText("debug.log", $"{msg}\n");
+    }
 }

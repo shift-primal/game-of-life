@@ -1,15 +1,18 @@
-public class Cell(int x, int y, bool alive)
+namespace gameoflife.Core
 {
-    public readonly Position Position = new(x, y);
-    public bool IsAlive = alive;
-
-    public void Kill()
+    public class Cell(int x, int y, bool alive)
     {
-        IsAlive = false;
-    }
+        public readonly Position Position = new(x, y);
+        public bool IsAlive = alive;
 
-    public void Revive()
-    {
-        IsAlive = true;
+        public void Kill()
+        {
+            IsAlive = false;
+        }
+
+        public void Revive()
+        {
+            IsAlive = true;
+        }
     }
 }

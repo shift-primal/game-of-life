@@ -1,9 +1,14 @@
-public class Generations
-{
-    private List<Grid> _generations;
+using gameoflife.Core;
 
-    Generations()
+namespace gameoflife.Memory
+{
+    public class Generations
     {
-        _generations = [];
+        private List<Grid> _generations;
+
+        Generations()
+        {
+            _generations = [];
+        }
     }
 }
